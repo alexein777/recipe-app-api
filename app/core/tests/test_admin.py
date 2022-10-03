@@ -9,10 +9,16 @@ from django.urls import reverse
 class AdminSiteTests(TestCase):
     def setUp(self):
         self.client = Client()
-        self.admin_user = get_user_model().objects.create_superuser('admin@example.com', 'testpass123')
+        self.admin_user = get_user_model().objects.create_superuser(
+            'admin@example.com',
+            'testpass123',
+        )
         self.client.force_login(self.admin_user)
 
-        self.user = get_user_model().objects.create_user('user@example.com', 'testpass123')
+        self.user = get_user_model().objects.create_user(
+            'user@example.com',
+            'testpass123',
+        )
 
     def test_users_list(self):
         url = reverse('admin:core_user_changelist')
