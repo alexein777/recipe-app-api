@@ -13,7 +13,6 @@ from core.models import (
 from recipe.serializers import (
     RecipeSerializer,
     RecipeDetailSerializer,
-    TagSerializer,
 )
 
 
@@ -123,7 +122,11 @@ class PrivateRecipeApiTests(TestCase):
 
     def test_partial_update(self):
         original_link = 'https://www.example.com/recipe.pdf'
-        recipe = create_recipe(user=self.user, title='Sample title', link=original_link)
+        recipe = create_recipe(
+            user=self.user,
+            title='Sample title',
+            link=original_link,
+        )
 
         payload = {'title': 'New title'}
         url = detail_url(recipe.id)
@@ -173,7 +176,7 @@ class PrivateRecipeApiTests(TestCase):
         res = self.client.patch(url, payload)
 
         recipe.refresh_from_db()
-        self.assertEqual(res.status_code, status.HTTP_200_OK )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(recipe.user, self.user)
 
     def test_delete_recipe(self):
